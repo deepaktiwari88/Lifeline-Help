@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<div class="row answer" answer-id="{{ answer.id }}">
+  {% csrf_token %}
+
+  <div class="col-md-11">
+    <div class="answer-user">
+     <p>{{ answer.answered_by }}</p>
+      <small class="answered">{% trans "answered" %} {{ answer.create_date }}</small>
+    </div>
+    <div class="answer-description well">
+      {{ answer.get_description_as_markdown|safe }}
+    </div>
+  </div>
+</div>
+<hr>
