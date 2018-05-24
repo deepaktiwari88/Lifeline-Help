@@ -9,7 +9,7 @@
 {% block body %}
   <h1 class="logo"><a href="{% url 'temp:login' %}">Lifeline Help</a></h1>
   <div class="signup" style="text-align: center">
-    <h2>{% trans 'Sign up for Lifeline' %}</h2>
+    <h2>{% trans 'Sign up for Lifeline Help' %}</h2>
     <form action="{% url 'temp:signup' %}" method="post" role="form">
       {% csrf_token %}
       {% for field in form.visible_fields %}
