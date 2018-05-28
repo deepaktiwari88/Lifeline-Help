@@ -1,0 +1,24 @@
+<article>
+  <h2>{{ article.title }}</h2>
+  <div class="info">
+    <span class="date">
+      <span class="glyphicon glyphicon-calendar"></span>
+      {{ article.date_created }}
+    </span>
+  </div>
+
+    <p>Added By: <strong>{{ article.created_by }}</strong></p>
+
+
+  <div class="content container-fluid">
+      {% if is_articles %}
+          <div class="well">{{ article.get_summary_as_markdown|safe }}</div>
+      {% else %}
+          <div class="well">{{ article.get_content_as_markdown|safe }}</div>
+      {% endif %}
+  </div>
+  <div>
+      <img src="{{ article.image.url }}" class="img-fluid">
+  </div>
+
+</article>
