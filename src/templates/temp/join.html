@@ -19,6 +19,7 @@
           {{ field }}
 
           {% for error in field.errors %}
+              <br>
             <label class="control-label">{{ error }}</label>
           {% endfor %}
         <hr>

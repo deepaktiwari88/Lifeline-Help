@@ -10,6 +10,9 @@ class Article(models.Model):
     description = models.TextField(max_length=2000 , blank=False)
     image = models.FileField(null=True , blank=True)
 
+    def __str__(self):
+        return self.title
+
     def get_summary(self):
         if len(self.description) > 2000:
             return '{0}...'.format(self.description[:2000])

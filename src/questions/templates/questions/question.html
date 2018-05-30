@@ -20,7 +20,7 @@
       <h2 class="question-title">{{ question.title }}</h2>
       <div class="question-user">
         <p>{{ question.asked_by }}</p>
-        <small class="asked">asked {{ question.create_date }}</small>
+        <small class="asked">asked {{ question.create_date | timesince}}</small>
       </div>
       <div class="question-description well">
         {{ question.get_description_as_markdown|safe }}
