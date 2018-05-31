@@ -3,29 +3,92 @@
 {% load staticfiles i18n %}
 
 {% block head %}
-  <link href="{% static 'css/signup.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/jquery main.js' %}"></script>
+
 {% endblock head %}
 
 {% block body %}
-  <h1 class="logo"><a href="{% url 'temp:login' %}">Lifeline Help</a></h1>
-  <div class="signup" style="text-align: center">
-    <h2>{% trans 'Sign up for Lifeline' %}</h2>
-    <form action="{% url 'temp:signup' %}" method="post" role="form">
-      {% csrf_token %}
-      {% for field in form.visible_fields %}
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-          <label for="{{ field.label }}">{{ field.label }}</label>
-        <br>
-          {{ field }}
 
-          {% for error in field.errors %}
-              <br>
-            <label class="control-label">{{ error }}</label>
-          {% endfor %}
-        <hr>
+    <h1 id="MainHeading">LIFELINE HELP</h1>
+    <div id="box">
+        <div id="main"></div>
+
+        <div id="loginform">
+            <h1>LOGIN</h1>
+            <form method="post" action="{% url 'temp:form' %}">
+                {% csrf_token %}
+             <input type="hidden" id="check" name="check" value="login">
+                {% for field in LoginFormRender.visible_fields %}
+                    {{ field.label }}<br>
+                    {{ field }}<br>
+                {% endfor %}
+
+            <button type="submit">LOGIN</button>
+            </form>
         </div>
-      {% endfor %}
-      <button type="submit" class="btn btn-primary btn-lg">{% trans 'Create an account' %}</button>
-    </form>
-  </div>
+
+        <div id="signupform">
+            <h1>SIGN UP</h1>
+            <form method="post" action="{% url 'temp:form' %}">
+                {% csrf_token %}
+
+            <input type="hidden" id="check" name="check" value="signup">
+
+                {% for field in SignUpFormRender.visible_fields %}
+                    {{ field.label }}<br>
+                    {{ field }}<br>
+                {% endfor %}
+
+                <button type="submit">SIGN UP</button>
+            </form>
+
+        </div>
+
+        <div id="login_msg">Have an account?</div>
+        <div id="signup_msg">Don't have an account?</div>
+
+        <button id="login_btn">LOGIN</button>
+        <button id="signup_btn">SIGN UP</button>
+    </div>
+
+    <div id="Errors">
+
+    {% if SignUpFormRender.errors %}
+	<!-- Error messaging -->
+        <div id="errors">
+            <div class="inner">
+                <p style="color: white">There were some errors in the information you entered. Please correct the following:</p>
+                {{ SignUpFormRender.non_field_errors }}
+                <ul>
+                    {% for field in SignUpFormRender %}
+                        {% if field.errors %}<li style="color: white">{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+	<!-- /Error messaging -->
+    {% endif %}
+
+    {% if LoginFormRender.errors %}
+	<!-- Error messaging -->
+        <div id="errors">
+            <div class="inner">
+                <p style="color: white">There were some errors in the information you entered. Please correct the following:</p>
+                {{ LoginFormRender.non_field_errors }}
+                <ul style="list-style-type: none">
+                    {% for field in LoginFormRender %}
+                        {% if field.errors %}<li style="color: white">{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+	<!-- /Error messaging -->
+    {% endif %}
+
+    </div>
+
+
 {% endblock body %}

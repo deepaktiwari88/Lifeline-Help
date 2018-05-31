@@ -1,43 +1,69 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from .forms import LoginForm,SignUpForm
 from django.contrib.auth import login,logout
 from django.contrib.auth.decorators import login_required
 
-def signup_view(request):
+
+def formhandleview(request):
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
 
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
+        if request.POST['check'] == "login":
 
-            user.set_password(password)
-            user.save()
-            #login the user
+            LoginFormRender = LoginForm(data=request.POST)
 
+            if LoginFormRender.is_valid():
+                user = LoginFormRender.get_user()
+                login(request, user)
+                return redirect('articles:art')
 
-            login(request , user)
-            return redirect('articles:art')
+            else:
+                SignUpFormRender = SignUpForm()
+
+                context = {
+                    'LoginFormRender': LoginFormRender,
+                    'SignUpFormRender': SignUpFormRender
+                }
+
+                print(LoginFormRender.non_field_errors())
+                return render(request, 'temp/join.html', context)
+
+        elif request.POST['check'] == "signup":
+
+            SignUpFormRender = SignUpForm(request.POST)
+            print(request.POST)
+
+            if SignUpFormRender.is_valid():
+                user = SignUpFormRender.save(commit=False)
+
+                password = SignUpFormRender.cleaned_data['password1']
+
+                user.set_password(password)
+                user.save()
+                # login the user
+
+                login(request, user)
+                return redirect('articles:art')
+
+            else:
+                print(SignUpFormRender.errors.as_data() , "a")
+                LoginFormRender = LoginForm()
+
+                context = {
+                    'LoginFormRender': LoginFormRender,
+                    'SignUpFormRender': SignUpFormRender
+                }
+                return render(request, 'temp/join.html', context)
 
     else:
-        form = UserCreationForm()
-    return render(request , 'temp/join.html', {'form':form})
+        LoginFormRender = LoginForm()
+        SignUpFormRender = SignUpForm()
 
-def login_view(request):
-    if request.method == "POST":
-
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-
-            user = form.get_user()
-            login(request, user)
-            return redirect('articles:art')
-    else:
-        form = AuthenticationForm()
-
-    return render(request , 'temp/login.html' , {'form':form})
+        context = {
+            'LoginFormRender': LoginFormRender,
+            'SignUpFormRender': SignUpFormRender
+        }
+        return render(request, 'temp/join.html', context)
 
 
 @login_required(login_url='/register/login/')
