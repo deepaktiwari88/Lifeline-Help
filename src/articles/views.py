@@ -3,13 +3,13 @@ from . import models
 from .forms import ArticleForm
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/register/login')
+@login_required(login_url='/register/welcome')
 def index(request):
     articles = models.Article.objects.order_by('-date_created')
     context = {'articles': articles}
     return render(request, 'articles/articles.html', context)
 
-@login_required(login_url='/register/login')
+@login_required(login_url='/register/welcome')
 def write(request):
 
     if request.method == 'POST':

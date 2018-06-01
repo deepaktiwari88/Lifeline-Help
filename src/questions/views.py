@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import QuestionForm , AnswerForm
 
 
-@login_required(login_url='/register/login/')
+@login_required(login_url='/register/welcome/')
 def questions(request):
 
     que = models.Question.objects.order_by('-create_date')
@@ -13,7 +13,7 @@ def questions(request):
     })
 
 
-@login_required(login_url='/register/login/')
+@login_required(login_url='/register/welcome/')
 def AskQuestion(request ):
 
     if request.method == "POST":
@@ -31,7 +31,7 @@ def AskQuestion(request ):
     return render(request , 'questions/ask.html' , {'form': form})
 
 
-@login_required(login_url='/register/login/')
+@login_required(login_url='/register/welcome/')
 def question_spec(request, pk):
     question = get_object_or_404(models.Question, pk=pk)
     form = AnswerForm(initial={'question': question})
@@ -41,7 +41,7 @@ def question_spec(request, pk):
         'form': form
     })
 
-@login_required(login_url='/register/login/')
+@login_required(login_url='/register/welcome/')
 def answer(request):
     if request.method == 'POST':
         form = AnswerForm(request.POST)

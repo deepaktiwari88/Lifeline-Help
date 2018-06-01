@@ -66,13 +66,13 @@ def formhandleview(request):
         return render(request, 'temp/join.html', context)
 
 
-@login_required(login_url='/register/login/')
+@login_required(login_url='/register/form/')
 def home(request):
 
     return render(request , 'temp/home.html',{})
 
-@login_required(login_url='/register/login/')
+@login_required(login_url='/register/form/')
 def logout_view(request):
 
     logout(request)
-    return redirect('temp:login')
+    return redirect('temp:form')
