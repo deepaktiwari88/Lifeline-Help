@@ -1,7 +1,6 @@
 .idea
-Scripts
-Lib
-Include
+Scripts/
+Lib/
+Include/
 pip-selfcheck.json
-tcl
-Scripts
+tcl/
