@@ -52,5 +52,5 @@ Lifeline Help is a social networking platform representing an NGO where users ca
 ## Contributors
 
 1. [Deepak Tiwari](https://www.github.com/deepaktiwari88)
-1. [Madhav Pruthi](https://www.github.com/MadhavPruthi)
+2. [Madhav Pruthi](https://www.github.com/MadhavPruthi)
 
